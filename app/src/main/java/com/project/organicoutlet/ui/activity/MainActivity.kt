@@ -3,7 +3,6 @@ package com.project.organicoutlet.ui.activity
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
-import androidx.recyclerview.widget.LinearLayoutManager
 import com.project.organicoutlet.R
 import com.project.organicoutlet.databinding.ActivityMainBinding
 import com.project.organicoutlet.model.Product

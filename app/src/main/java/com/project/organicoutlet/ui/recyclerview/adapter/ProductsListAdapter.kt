@@ -5,10 +5,8 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
-import com.project.organicoutlet.R
 import com.project.organicoutlet.databinding.ProductItemBinding
 import com.project.organicoutlet.model.Product
-import org.w3c.dom.Text
 
 class ProductsListAdapter(private val products: List<Product>) : RecyclerView.Adapter<ProductsListAdapter.ViewHolder>() {
 
