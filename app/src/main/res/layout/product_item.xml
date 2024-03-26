@@ -3,7 +3,12 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools">
 
+    <data>
+        <variable
+            name="product"
+            type="com.project.organicoutlet.model.Product" />
 
+    </data>
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
@@ -19,30 +24,31 @@
             android:textStyle="bold"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            android:text="Cesta de frutas" />
+            android:background="@color/slateBlue"
+             />
 
         <TextView
             android:id="@+id/txt_description"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginHorizontal="@dimen/default_margin"
-            android:layout_marginTop="@dimen/smaller_margin"
             android:textSize="16sp"
             android:textStyle="italic"
+            android:background="@color/slateBlue1"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/txt_product_name"
-            android:text="laranja, mamao, melancia" />
+              />
 
         <TextView
             android:id="@+id/txt_price"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginHorizontal="@dimen/default_margin"
-            android:layout_marginTop="@dimen/smaller_margin"
+            android:background="@color/slateBlue3"
             android:textSize="16sp"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/txt_description"
-            android:text="R$ 50" />
+              />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>
