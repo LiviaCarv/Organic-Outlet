@@ -1,15 +1,14 @@
 package com.project.organicoutlet.ui.recyclerview.adapter
 
 import android.view.LayoutInflater
-import android.view.View
 import android.view.ViewGroup
-import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.project.organicoutlet.databinding.ProductItemBinding
 import com.project.organicoutlet.model.Product
 
-class ProductsListAdapter(private val products: List<Product>) : RecyclerView.Adapter<ProductsListAdapter.ViewHolder>() {
+class ProductsListAdapter(products: List<Product>) : RecyclerView.Adapter<ProductsListAdapter.ViewHolder>() {
 
+    private val productsMutable = products.toMutableList()
     class ViewHolder(private val binding: ProductItemBinding): RecyclerView.ViewHolder(binding.root) {
         fun bind(item: Product) {
             binding.product = item
@@ -25,12 +24,18 @@ class ProductsListAdapter(private val products: List<Product>) : RecyclerView.Ad
     }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-        val product = products[position]
+        val product = productsMutable[position]
         holder.bind(product)
     }
 
     override fun getItemCount(): Int {
-        return products.size
+        return productsMutable.size
+    }
+
+    fun update(allProducts: List<Product>) {
+        productsMutable.clear()
+        productsMutable.addAll(allProducts)
+        notifyDataSetChanged()
     }
 
 }
