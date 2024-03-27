@@ -11,49 +11,78 @@
 
     </data>
 
-    <androidx.constraintlayout.widget.ConstraintLayout
+    <com.google.android.material.card.MaterialCardView
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        android:layout_margin="8dp"
+        app:cardElevation="8dp"
+        app:cardCornerRadius="8dp">
 
-        <TextView
-            android:id="@+id/txt_product_name"
+        <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginHorizontal="@dimen/default_margin"
-            android:layout_marginTop="@dimen/default_margin"
-            android:background="@color/slateBlue"
-            android:paddingHorizontal="@dimen/default_padding_start"
-            android:fontFamily="monospace"
-            android:text="@{product.name}"
-            android:textSize="18sp"
-            android:textStyle="bold"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            android:layout_height="wrap_content">
 
-        <TextView
-            android:id="@+id/txt_description"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginHorizontal="@dimen/default_margin"
-            android:background="@color/slateBlue1"
-            android:text="@{product.description}"
-            android:paddingHorizontal="@dimen/default_padding_start"
-            android:textSize="16sp"
-            android:textStyle="italic"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/txt_product_name" />
+            <TextView
+                android:id="@+id/txt_product_name"
+                style="@style/product_item_style"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="@dimen/default_margin"
+                android:fontFamily="@font/montserrat_bold"
+                android:text="@{product.name}"
+                android:textSize="@dimen/product_name_text_size"
+                android:textStyle="bold"
+                app:layout_constraintBottom_toTopOf="@+id/txt_description"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="@+id/img_product"
+                app:layout_constraintTop_toTopOf="@+id/img_product"
+                tools:text="Saladada dessdsddssddssdsdadad fru" />
 
-        <TextView
-            android:id="@+id/txt_price"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginHorizontal="@dimen/default_margin"
-            android:background="@color/slateBlue3"
-            android:text="@{product.price.toPlainString()}"
-            android:paddingHorizontal="@dimen/default_padding_start"
-            android:textSize="16sp"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/txt_description" />
+            <TextView
+                android:id="@+id/txt_description"
+                style="@style/product_item_style"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/montserrat"
+                android:paddingHorizontal="@dimen/default_padding_start"
+                android:text="@{product.description}"
+                android:textSize="@dimen/product_description_text_size"
+                app:layout_constraintBottom_toTopOf="@+id/txt_price"
+                app:layout_constraintEnd_toEndOf="@+id/txt_product_name"
+                app:layout_constraintStart_toStartOf="@+id/txt_product_name"
+                app:layout_constraintTop_toBottomOf="@+id/txt_product_name"
+                tools:text="Saladada de fru" />
 
-    </androidx.constraintlayout.widget.ConstraintLayout>
+            <TextView
+                android:id="@+id/txt_price"
+                style="@style/product_item_style"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/montserrat"
+                android:paddingHorizontal="@dimen/default_padding_start"
+                android:text="@{@string/price_format(product.price.toPlainString())}"
+                android:textColor="@color/green"
+                android:textSize="@dimen/product_name_text_size"
+                android:textStyle="bold"
+                app:layout_constraintBottom_toBottomOf="@+id/img_product"
+                app:layout_constraintEnd_toEndOf="@+id/txt_description"
+                app:layout_constraintStart_toStartOf="@+id/txt_description"
+                app:layout_constraintTop_toBottomOf="@+id/txt_description"
+                tools:text="Saladada de fru" />
+
+            <ImageView
+                android:id="@+id/img_product"
+                android:layout_width="100dp"
+                android:layout_height="100dp"
+                android:layout_margin="@dimen/smaller_margin"
+                android:layout_marginStart="16dp"
+                android:scaleType="centerCrop"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:srcCompat="@android:color/holo_blue_bright" />
+
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+    </com.google.android.material.card.MaterialCardView>
 </layout>

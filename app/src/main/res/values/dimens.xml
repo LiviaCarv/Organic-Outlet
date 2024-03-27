@@ -3,4 +3,6 @@
     <dimen name="default_margin">16dp</dimen>
     <dimen name="smaller_margin">8dp</dimen>
     <dimen name="default_padding_start">8dp</dimen>
+    <dimen name="product_name_text_size">20sp</dimen>
+    <dimen name="product_description_text_size">14sp</dimen>
 </resources>
