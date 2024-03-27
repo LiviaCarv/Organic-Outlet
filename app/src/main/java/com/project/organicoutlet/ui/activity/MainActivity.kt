@@ -1,5 +1,6 @@
 package com.project.organicoutlet.ui.activity
 
+import android.content.Intent
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
@@ -18,9 +19,15 @@ class MainActivity : AppCompatActivity() {
         binding.productsList.adapter = ProductsListAdapter(
             listOf(
                 Product("Cesta", "ksslkdjsl", BigDecimal("19.99")),
-                Product("Segunda cesta", "ksslkdjsl", BigDecimal("27.99"))
+                Product("Segunda cesta", "ksslkdjsl", BigDecimal("27.99")),
+                Product("Cesta", "ksslkdjsl", BigDecimal("19.99")),
             )
         )
+
+        binding.fabAddProduct.setOnClickListener {
+            val intent = Intent(this, ProductFormActivity::class.java)
+            startActivity(intent)
+        }
 
 
 
