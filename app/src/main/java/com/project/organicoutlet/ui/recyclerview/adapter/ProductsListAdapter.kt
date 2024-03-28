@@ -3,6 +3,7 @@ package com.project.organicoutlet.ui.recyclerview.adapter
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
+import coil.load
 import com.project.organicoutlet.databinding.ProductItemBinding
 import com.project.organicoutlet.model.Product
 
@@ -12,6 +13,7 @@ class ProductsListAdapter(products: List<Product>) : RecyclerView.Adapter<Produc
     class ViewHolder(private val binding: ProductItemBinding): RecyclerView.ViewHolder(binding.root) {
         fun bind(item: Product) {
             binding.product = item
+            binding.imgProduct.load(item.image)
             binding.executePendingBindings()
         }
 

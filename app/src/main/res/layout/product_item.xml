@@ -80,8 +80,7 @@
                 app:layout_constraintEnd_toStartOf="@+id/txt_product_name"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintWidth_percent="0.3"
-                app:srcCompat="@android:color/holo_blue_bright" />
+                app:layout_constraintWidth_percent="0.3" />
 
 
         </androidx.constraintlayout.widget.ConstraintLayout>
