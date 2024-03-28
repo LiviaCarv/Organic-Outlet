@@ -3,7 +3,8 @@
     <string name="name">Name</string>
     <string name="description">Description</string>
     <string name="price">Price</string>
-    <string name="save">SAVE</string>
-    <string name="price_format">R$ %s</string>
+    <string name="price_format">R$ %1$.2f</string>
     <string name="add_product">add product</string>
+    <string name="product_image">Product image</string>
+    <string name="new_product">NEW PRODUCT</string>
 </resources>

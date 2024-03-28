@@ -15,7 +15,7 @@ class ProductFormActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        binding=  DataBindingUtil.setContentView(this, R.layout.activity_product_form)
+        binding = DataBindingUtil.setContentView(this, R.layout.activity_product_form)
 
         saveBtnListener()
     }

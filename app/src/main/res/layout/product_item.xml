@@ -15,8 +15,8 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_margin="8dp"
-        app:cardElevation="8dp"
-        app:cardCornerRadius="8dp">
+        app:cardCornerRadius="8dp"
+        app:cardElevation="8dp">
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
@@ -60,7 +60,7 @@
                 android:layout_height="wrap_content"
                 android:fontFamily="@font/montserrat"
                 android:paddingHorizontal="@dimen/default_padding_start"
-                android:text="@{@string/price_format(product.price.toPlainString())}"
+                android:text="@{@string/price_format(product.price)}"
                 android:textColor="@color/green"
                 android:textSize="@dimen/product_name_text_size"
                 android:textStyle="bold"
@@ -72,14 +72,15 @@
 
             <ImageView
                 android:id="@+id/img_product"
-                android:layout_width="100dp"
-                android:layout_height="100dp"
-                android:layout_margin="@dimen/smaller_margin"
-                android:layout_marginStart="16dp"
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:contentDescription="@string/product_image"
                 android:scaleType="centerCrop"
                 app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toStartOf="@+id/txt_product_name"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintWidth_percent="0.3"
                 app:srcCompat="@android:color/holo_blue_bright" />
 
 
