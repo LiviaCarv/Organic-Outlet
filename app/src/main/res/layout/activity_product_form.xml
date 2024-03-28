@@ -3,10 +3,6 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools">
 
-    <data>
-
-    </data>
-
     <ScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
@@ -17,39 +13,69 @@
             android:layout_height="wrap_content"
             tools:context=".ui.activity.ProductFormActivity">
 
-            <EditText
-                android:id="@+id/edt_name"
+
+            <ImageView
+                android:id="@+id/edt_img_product"
                 android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_marginHorizontal="@dimen/default_margin"
-                android:layout_marginTop="@dimen/default_margin"
-                android:hint="@string/name"
-                android:inputType="text"
+                android:layout_height="200dp"
+                android:scaleType="centerCrop"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
+                app:layout_constraintTop_toTopOf="parent"
+                tools:src="@tools:sample/avatars" />
 
-            <EditText
-                android:id="@+id/edt_description"
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/outtxtfield_name"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_margin="@dimen/default_margin"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/edt_img_product">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/edt_name"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="@string/name" />
+
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/outtxtfield_description"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/default_margin"
-                android:hint="@string/description"
-                android:inputType="text"
-                app:layout_constraintEnd_toEndOf="@+id/edt_name"
-                app:layout_constraintStart_toStartOf="@+id/edt_name"
-                app:layout_constraintTop_toBottomOf="@+id/edt_name" />
+                app:layout_constraintEnd_toEndOf="@+id/outtxtfield_name"
+                app:layout_constraintStart_toStartOf="@+id/outtxtfield_name"
+                app:layout_constraintTop_toBottomOf="@+id/outtxtfield_name">
 
-            <EditText
-                android:id="@+id/edt_price"
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/edt_description"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="@string/description" />
+
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/outtxtfield_price"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/default_margin"
-                android:hint="@string/price"
-                android:inputType="numberDecimal"
-                app:layout_constraintEnd_toEndOf="@+id/edt_description"
-                app:layout_constraintStart_toStartOf="@+id/edt_description"
-                app:layout_constraintTop_toBottomOf="@+id/edt_description" />
+                app:layout_constraintEnd_toEndOf="@+id/outtxtfield_description"
+                app:layout_constraintStart_toStartOf="@+id/outtxtfield_description"
+                app:layout_constraintTop_toBottomOf="@+id/outtxtfield_description">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/edt_price"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="@string/price"
+                    android:inputType="numberDecimal" />
+
+            </com.google.android.material.textfield.TextInputLayout>
+
 
             <Button
                 android:id="@+id/btn_save"
@@ -59,10 +85,10 @@
                 android:text="@string/save"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="0.0"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/edt_price"
-                app:layout_constraintVertical_bias="1" />
+                app:layout_constraintTop_toBottomOf="@+id/outtxtfield_price"
+                app:layout_constraintVertical_bias="1.0" />
+
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 

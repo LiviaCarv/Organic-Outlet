@@ -7,4 +7,5 @@
     <string name="add_product">add product</string>
     <string name="product_image">Product image</string>
     <string name="new_product">NEW PRODUCT</string>
+    <string name="save">SAVE</string>
 </resources>
