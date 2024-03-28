@@ -2,6 +2,7 @@ package com.project.organicoutlet.ui.activity
 
 import android.content.Intent
 import android.os.Bundle
+import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
 import com.project.organicoutlet.R

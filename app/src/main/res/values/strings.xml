@@ -8,4 +8,6 @@
     <string name="product_image">Product image</string>
     <string name="new_product">NEW PRODUCT</string>
     <string name="save">SAVE</string>
+    <string name="load">LOAD</string>
+    <string name="url">URL</string>
 </resources>
