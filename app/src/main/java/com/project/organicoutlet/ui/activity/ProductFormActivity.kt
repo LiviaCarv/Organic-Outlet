@@ -11,6 +11,7 @@ import com.project.organicoutlet.databinding.ActivityProductFormBinding
 import com.project.organicoutlet.databinding.AddImageFormBinding
 import com.project.organicoutlet.extensions.loadImage
 import com.project.organicoutlet.model.Product
+import com.project.organicoutlet.ui.dialog.ImageFormDialog
 import java.math.BigDecimal
 
 class ProductFormActivity : AppCompatActivity() {
@@ -28,28 +29,10 @@ class ProductFormActivity : AppCompatActivity() {
 
     private fun productImageListener() {
         binding.edtImgProduct.setOnClickListener {
-            createDialog()
+            ImageFormDialog(this).showAlertDialog(binding)
         }
     }
 
-    private fun createDialog() {
-        val bindingImageForm = AddImageFormBinding.inflate(layoutInflater)
-
-        bindingImageForm.fabLoadImage.setOnClickListener {
-           val url = bindingImageForm.edtUrl.text.toString()
-            bindingImageForm.imgProductProfile.load(url)
-        }
-
-        AlertDialog.Builder(this)
-            .setView(bindingImageForm.root)
-            .setPositiveButton("Confirmar") { _, _ ->
-                imageUrl = bindingImageForm.edtUrl.text.toString()
-                binding.edtImgProduct.loadImage(imageUrl)
-
-            }
-            .setNegativeButton("Cancelar") { _, _ -> }
-            .show()
-    }
 
     private fun saveBtnListener() {
         binding.btnSave.setOnClickListener {
