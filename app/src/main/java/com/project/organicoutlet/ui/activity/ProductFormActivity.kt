@@ -1,14 +1,11 @@
 package com.project.organicoutlet.ui.activity
 
 import android.os.Bundle
-import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
-import coil.load
 import com.project.organicoutlet.R
 import com.project.organicoutlet.dao.ProductsDao
 import com.project.organicoutlet.databinding.ActivityProductFormBinding
-import com.project.organicoutlet.databinding.AddImageFormBinding
 import com.project.organicoutlet.extensions.loadImage
 import com.project.organicoutlet.model.Product
 import com.project.organicoutlet.ui.dialog.ImageFormDialog
@@ -29,10 +26,12 @@ class ProductFormActivity : AppCompatActivity() {
 
     private fun productImageListener() {
         binding.edtImgProduct.setOnClickListener {
-            ImageFormDialog(this).showAlertDialog(binding)
+            ImageFormDialog(this).showAlertDialog(imageUrl) { url ->
+                imageUrl = url
+                binding.edtImgProduct.loadImage(imageUrl)
+            }
         }
     }
-
 
     private fun saveBtnListener() {
         binding.btnSave.setOnClickListener {
