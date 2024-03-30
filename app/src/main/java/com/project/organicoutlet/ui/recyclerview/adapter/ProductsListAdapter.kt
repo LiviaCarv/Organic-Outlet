@@ -1,19 +1,31 @@
 package com.project.organicoutlet.ui.recyclerview.adapter
 
+import android.opengl.Visibility
 import android.view.LayoutInflater
+import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import coil.load
+import com.project.organicoutlet.R
 import com.project.organicoutlet.databinding.ProductItemBinding
+import com.project.organicoutlet.extensions.loadImage
 import com.project.organicoutlet.model.Product
 
-class ProductsListAdapter(products: List<Product>) : RecyclerView.Adapter<ProductsListAdapter.ViewHolder>() {
+class ProductsListAdapter(products: List<Product>) :
+    RecyclerView.Adapter<ProductsListAdapter.ViewHolder>() {
 
     private val productsMutable = products.toMutableList()
-    class ViewHolder(private val binding: ProductItemBinding): RecyclerView.ViewHolder(binding.root) {
+
+    class ViewHolder(private val binding: ProductItemBinding) :
+        RecyclerView.ViewHolder(binding.root) {
         fun bind(item: Product) {
             binding.product = item
-            binding.imgProduct.load(item.image)
+
+            if (item.image == null) {
+                binding.imgProduct.visibility = View.GONE
+            }
+
+            binding.imgProduct.loadImage(item.image)
             binding.executePendingBindings()
         }
 

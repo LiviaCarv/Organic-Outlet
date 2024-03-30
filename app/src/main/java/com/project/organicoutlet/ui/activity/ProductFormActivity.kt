@@ -9,6 +9,7 @@ import com.project.organicoutlet.R
 import com.project.organicoutlet.dao.ProductsDao
 import com.project.organicoutlet.databinding.ActivityProductFormBinding
 import com.project.organicoutlet.databinding.AddImageFormBinding
+import com.project.organicoutlet.extensions.loadImage
 import com.project.organicoutlet.model.Product
 import java.math.BigDecimal
 
@@ -43,7 +44,7 @@ class ProductFormActivity : AppCompatActivity() {
             .setView(bindingImageForm.root)
             .setPositiveButton("Confirmar") { _, _ ->
                 imageUrl = bindingImageForm.edtUrl.text.toString()
-                binding.edtImgProduct.load(imageUrl)
+                binding.edtImgProduct.loadImage(imageUrl)
 
             }
             .setNegativeButton("Cancelar") { _, _ -> }
