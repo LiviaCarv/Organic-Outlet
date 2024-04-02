@@ -1,6 +1,7 @@
 package com.project.organicoutlet.ui.activity
 
 import android.os.Bundle
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
 import com.project.organicoutlet.R
@@ -19,7 +20,7 @@ class ProductFormActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = DataBindingUtil.setContentView(this, R.layout.activity_product_form)
-
+        title = getString(R.string.register_product)
         saveBtnListener()
         productImageListener()
     }
@@ -36,8 +37,13 @@ class ProductFormActivity : AppCompatActivity() {
     private fun saveBtnListener() {
         binding.btnSave.setOnClickListener {
             val product = newProduct()
-            dao.insert(product)
-            finish()
+            if (product.name.isEmpty()) {
+                Toast.makeText(this, "Please insert the product name.", Toast.LENGTH_SHORT).show()
+            } else  {
+                dao.insert(product)
+                finish()
+            }
+
         }
     }
 
