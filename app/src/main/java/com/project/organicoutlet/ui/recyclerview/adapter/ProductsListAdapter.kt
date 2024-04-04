@@ -1,28 +1,29 @@
 package com.project.organicoutlet.ui.recyclerview.adapter
 
-import android.opengl.Visibility
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
-import coil.load
-import com.project.organicoutlet.R
 import com.project.organicoutlet.databinding.ProductItemBinding
 import com.project.organicoutlet.extensions.loadImage
 import com.project.organicoutlet.model.Product
 
-class ProductsListAdapter(products: List<Product>) :
+class ProductsListAdapter(products: List<Product>, val onItemClickListener: (product: Product) -> Unit) :
     RecyclerView.Adapter<ProductsListAdapter.ViewHolder>() {
 
     private val productsMutable = products.toMutableList()
 
-    class ViewHolder(private val binding: ProductItemBinding) :
+    inner class ViewHolder(private val binding: ProductItemBinding) :
         RecyclerView.ViewHolder(binding.root) {
         fun bind(item: Product) {
             binding.product = item
 
             if (item.image == null) {
                 binding.imgProduct.visibility = View.GONE
+            }
+
+            binding.root.setOnClickListener {
+                onItemClickListener(item)
             }
 
             binding.imgProduct.loadImage(item.image)
@@ -51,5 +52,7 @@ class ProductsListAdapter(products: List<Product>) :
         productsMutable.addAll(allProducts)
         notifyDataSetChanged()
     }
+
+
 
 }

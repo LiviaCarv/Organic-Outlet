@@ -39,7 +39,9 @@ class ProductFormActivity : AppCompatActivity() {
             val product = newProduct()
             if (product.name.isEmpty()) {
                 Toast.makeText(this, "Please insert the product name.", Toast.LENGTH_SHORT).show()
-            } else  {
+            } else if (product.price.equals(BigDecimal.ZERO)) {
+                Toast.makeText(this, "Please insert the product price.", Toast.LENGTH_SHORT).show()
+            } else {
                 dao.insert(product)
                 finish()
             }

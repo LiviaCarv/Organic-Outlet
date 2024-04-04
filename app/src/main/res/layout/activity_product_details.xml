@@ -22,12 +22,12 @@
                 android:id="@+id/img_product_top"
                 android:layout_width="wrap_content"
                 android:layout_height="200dp"
-                android:paddingHorizontal="16dp"
-                android:paddingVertical="8dp"
+                android:contentDescription="@string/product_image_description"
+                android:scaleType="centerCrop"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
-                app:srcCompat="@drawable/erro" />
+                app:srcCompat="@drawable/imagem_padrao" />
 
             <com.google.android.material.card.MaterialCardView
                 android:id="@+id/material_card_price"
@@ -44,8 +44,10 @@
                     android:id="@+id/txt_display_price"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:padding="10dp"
                     android:textColor="@color/green"
                     android:textSize="24sp"
+                    android:text="@{@string/price_format(product.price)}"
                     android:textStyle="bold"
                     tools:text="R$ 24" />
 
@@ -56,25 +58,24 @@
                 android:id="@+id/txt_display_name"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_margin="@dimen/default_margin"
+                android:layout_marginVertical="@dimen/default_margin"
+                android:text="@{product.name}"
                 android:textSize="28sp"
-                android:text="@{@string/price_format(product.price)}"
                 android:textStyle="bold"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/img_product_top" />
+                app:layout_constraintStart_toStartOf="@+id/material_card_price"
+                app:layout_constraintTop_toBottomOf="@+id/material_card_price"
+                tools:text="Name" />
 
             <TextView
                 android:id="@+id/txt_display_details"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_margin="@dimen/default_margin"
-                android:layout_marginTop="16dp"
-                android:text="detalhes"
+                android:layout_marginVertical="@dimen/default_margin"
+                android:text="@{product.description}"
                 android:textSize="20sp"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/txt_display_name" />
+                app:layout_constraintStart_toStartOf="@+id/txt_display_name"
+                app:layout_constraintTop_toBottomOf="@+id/txt_display_name"
+                tools:text="Description" />
         </androidx.constraintlayout.widget.ConstraintLayout>
     </ScrollView>
 </layout>
