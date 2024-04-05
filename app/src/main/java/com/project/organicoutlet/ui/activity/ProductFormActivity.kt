@@ -4,17 +4,20 @@ import android.os.Bundle
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
+import androidx.room.Room
 import com.project.organicoutlet.R
 import com.project.organicoutlet.dao.ProductsDao
 import com.project.organicoutlet.databinding.ActivityProductFormBinding
 import com.project.organicoutlet.extensions.loadImage
 import com.project.organicoutlet.database.Product
+import com.project.organicoutlet.database.ProductDao
+import com.project.organicoutlet.database.ProductDatabase
 import com.project.organicoutlet.ui.dialog.ImageFormDialog
 import java.math.BigDecimal
 
 class ProductFormActivity : AppCompatActivity() {
     private lateinit var binding: ActivityProductFormBinding
-    private val dao: ProductsDao = ProductsDao()
+    private lateinit var productDao: ProductDao
     private var imageUrl: String? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -23,6 +26,9 @@ class ProductFormActivity : AppCompatActivity() {
         title = getString(R.string.register_product)
         saveBtnListener()
         productImageListener()
+
+        val database = ProductDatabase.getInstance(this)
+        productDao = database.productDao()
     }
 
     private fun productImageListener() {
@@ -42,7 +48,7 @@ class ProductFormActivity : AppCompatActivity() {
             } else if (product.price.equals(BigDecimal.ZERO)) {
                 Toast.makeText(this, "Please insert the product price.", Toast.LENGTH_SHORT).show()
             } else {
-                dao.insert(product)
+                productDao.insert(product)
                 finish()
             }
 
