@@ -4,7 +4,7 @@ import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import com.project.organicoutlet.databinding.ActivityProductDetailsBinding
 import com.project.organicoutlet.extensions.loadImage
-import com.project.organicoutlet.model.Product
+import com.project.organicoutlet.database.Product
 
 
 class ProductDetailsActivity : AppCompatActivity() {

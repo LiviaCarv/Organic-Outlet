@@ -2,14 +2,12 @@ package com.project.organicoutlet.ui.activity
 
 import android.content.Intent
 import android.os.Bundle
-import android.widget.Toast
-import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
 import com.project.organicoutlet.R
 import com.project.organicoutlet.dao.ProductsDao
 import com.project.organicoutlet.databinding.ActivityProductsListBinding
-import com.project.organicoutlet.model.Product
+import com.project.organicoutlet.database.Product
 import com.project.organicoutlet.ui.recyclerview.adapter.ProductsListAdapter
 
 class ProductsListActivity : AppCompatActivity() {

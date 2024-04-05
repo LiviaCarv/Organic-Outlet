@@ -6,7 +6,7 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.project.organicoutlet.databinding.ProductItemBinding
 import com.project.organicoutlet.extensions.loadImage
-import com.project.organicoutlet.model.Product
+import com.project.organicoutlet.database.Product
 
 class ProductsListAdapter(products: List<Product>, val onItemClickListener: (product: Product) -> Unit) :
     RecyclerView.Adapter<ProductsListAdapter.ViewHolder>() {

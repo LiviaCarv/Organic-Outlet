@@ -7,7 +7,7 @@
 
         <variable
             name="product"
-            type="com.project.organicoutlet.model.Product" />
+            type="com.project.organicoutlet.database.Product" />
 
     </data>
 

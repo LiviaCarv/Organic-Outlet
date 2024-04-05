@@ -8,7 +8,7 @@ import com.project.organicoutlet.R
 import com.project.organicoutlet.dao.ProductsDao
 import com.project.organicoutlet.databinding.ActivityProductFormBinding
 import com.project.organicoutlet.extensions.loadImage
-import com.project.organicoutlet.model.Product
+import com.project.organicoutlet.database.Product
 import com.project.organicoutlet.ui.dialog.ImageFormDialog
 import java.math.BigDecimal
 

@@ -1,6 +1,7 @@
 plugins {
     id("com.android.application")
     id("org.jetbrains.kotlin.android")
+    id("kotlin-kapt")
 }
 
 android {
@@ -40,6 +41,13 @@ android {
 }
 
 dependencies {
+
+//    ROOM
+    val room_version = "2.6.1"
+    implementation("androidx.room:room-runtime:$room_version")
+    kapt("androidx.room:room-compiler:$room_version")
+
+//    COIL
     implementation("io.coil-kt:coil:2.6.0")
 
     implementation("androidx.core:core-ktx:1.12.0")
