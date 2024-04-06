@@ -30,4 +30,4 @@ Organic Outlet is an Android application that represents a list of products avai
 <img src="https://github.com/LiviaCarv/Organic-Outlet/assets/112710454/55b2babb-50de-47ac-be61-c13f9f903906" width="200" />
 <img src="https://github.com/LiviaCarv/Organic-Outlet/assets/112710454/af424eff-19ab-40c1-89cd-9b8d4d72acba" width="200" />
 
-If you have any questions or suggestions, don't hesitate to reach out. Thank you for checking out the "About Me" app! :smile: :rocket:
+If you have any questions or suggestions, don't hesitate to reach out. Thank you for checking out the "Organic Outlet" app! :smile: :rocket:
