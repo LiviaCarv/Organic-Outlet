@@ -2,6 +2,7 @@ package com.project.organicoutlet.ui.activity
 
 import android.content.Intent
 import android.os.Bundle
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
 import com.project.organicoutlet.R
@@ -12,7 +13,7 @@ import com.project.organicoutlet.ui.recyclerview.adapter.ProductsListAdapter
 
 class ProductsListActivity : AppCompatActivity() {
     private lateinit var binding: ActivityProductsListBinding
-    private val adapter = ProductsListAdapter(emptyList()) { product ->
+    private val adapter = ProductsListAdapter { product ->
         openDetailsActivity(product)
     }
 
@@ -38,6 +39,7 @@ class ProductsListActivity : AppCompatActivity() {
 
     private fun bindRecyclerViewAdapter() {
         binding.productsList.adapter = adapter
+
     }
 
     private fun fabListener() {
