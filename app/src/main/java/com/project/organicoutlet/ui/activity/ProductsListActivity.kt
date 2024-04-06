@@ -12,9 +12,7 @@ import com.project.organicoutlet.ui.recyclerview.adapter.ProductsListAdapter
 
 class ProductsListActivity : AppCompatActivity() {
     private lateinit var binding: ActivityProductsListBinding
-    private val database = ProductDatabase.getInstance(this)
-    private val productDao = database.productDao()
-    private val adapter = ProductsListAdapter(productDao.getAllProducts()) { product ->
+    private val adapter = ProductsListAdapter(emptyList()) { product ->
         openDetailsActivity(product)
     }
 
@@ -33,6 +31,8 @@ class ProductsListActivity : AppCompatActivity() {
 
     override fun onResume() {
         super.onResume()
+        val database = ProductDatabase.getInstance(this)
+        val productDao = database.productDao()
         adapter.update(productDao.getAllProducts())
     }
 

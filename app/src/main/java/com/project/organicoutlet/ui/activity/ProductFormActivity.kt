@@ -4,14 +4,12 @@ import android.os.Bundle
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
-import androidx.room.Room
 import com.project.organicoutlet.R
-import com.project.organicoutlet.dao.ProductsDao
-import com.project.organicoutlet.databinding.ActivityProductFormBinding
-import com.project.organicoutlet.extensions.loadImage
 import com.project.organicoutlet.database.Product
 import com.project.organicoutlet.database.ProductDao
 import com.project.organicoutlet.database.ProductDatabase
+import com.project.organicoutlet.databinding.ActivityProductFormBinding
+import com.project.organicoutlet.extensions.loadImage
 import com.project.organicoutlet.ui.dialog.ImageFormDialog
 import java.math.BigDecimal
 
