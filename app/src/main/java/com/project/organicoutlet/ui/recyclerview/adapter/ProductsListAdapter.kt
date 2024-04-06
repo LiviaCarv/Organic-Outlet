@@ -21,21 +21,9 @@ class ProductsListAdapter(
     private val productsMutable = products.toMutableList()
 
     inner class ViewHolder(private val binding: ProductItemBinding) :
-        RecyclerView.ViewHolder(binding.root), PopupMenu.OnMenuItemClickListener {
+        RecyclerView.ViewHolder(binding.root) {
         private lateinit var product: Product
 
-        init {
-            itemView.setOnLongClickListener {
-                PopupMenu(binding.root.context, itemView).apply {
-                    menuInflater.inflate(
-                        R.menu.details_menu,
-                        menu
-                    )
-                    setOnMenuItemClickListener(this@ViewHolder)
-                }.show()
-                true
-            }
-        }
 
         fun bind(item: Product) {
             product = item
@@ -55,31 +43,6 @@ class ProductsListAdapter(
 
             binding.executePendingBindings()
         }
-
-
-        override fun onMenuItemClick(item: MenuItem?): Boolean {
-            item?.let {
-                when (item.itemId) {
-                    R.id.option_delete -> {
-                        deleteProduct(product)
-                    }
-
-                    R.id.option_edit -> {
-                        editProduct(product)
-                    }
-                }
-            }
-            return true
-        }
-
-        private fun deleteProduct(product: Product) {
-            Toast.makeText(binding.root.context, "removeProduct", Toast.LENGTH_SHORT).show()
-        }
-
-        private fun editProduct(product: Product) {
-            Toast.makeText(binding.root.context, "editProduct", Toast.LENGTH_SHORT).show()
-        }
-
 
     }
 

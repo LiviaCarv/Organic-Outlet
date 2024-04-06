@@ -36,7 +36,6 @@ class ProductsListActivity : AppCompatActivity() {
 
     override fun onResume() {
         super.onResume()
-
         adapter.update(productDao.getAllProducts())
     }
 
