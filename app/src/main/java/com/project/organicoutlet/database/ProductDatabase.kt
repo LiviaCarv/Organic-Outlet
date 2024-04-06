@@ -14,11 +14,20 @@ abstract class ProductDatabase : RoomDatabase() {
     abstract fun productDao(): ProductDao
 
     companion object {
-        fun getInstance(context: Context) : ProductDatabase {
-            return Room.databaseBuilder(context, ProductDatabase::class.java, "organic-outlet-database")
-                .allowMainThreadQueries()
-                .build()
-        }
-    }
+        @Volatile
+        private lateinit var db: ProductDatabase
 
+        fun getInstance(context: Context): ProductDatabase {
+            if (::db.isInitialized) return db
+            return Room.databaseBuilder(
+                context,
+                ProductDatabase::class.java,
+                "organic-outlet-database"
+            ).allowMainThreadQueries()
+                .build().also {
+                    db = it
+                }
+        }
+
+    }
 }
