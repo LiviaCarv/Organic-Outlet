@@ -23,4 +23,4 @@ data class Product(
 
     @ColumnInfo(name = "image")
     var image: String? = null
-) : Serializable
+)

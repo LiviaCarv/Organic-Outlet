@@ -22,22 +22,26 @@ class ProductFormActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = DataBindingUtil.setContentView(this, R.layout.activity_product_form)
-        title = getString(R.string.register_product)
+        val database = ProductDatabase.getInstance(this)
+        productDao = database.productDao()
 
-        if (intent.hasExtra("product")) {
-            product = intent.getSerializableExtra("product") as? Product
+        if (intent.hasExtra("productId")) {
+            val productId = intent.getLongExtra("productId", -1L)
+            product = productDao.getProductById(productId)
             product?.let {
                 binding.product = product
                 binding.edtImgProduct.loadImage(product!!.image)
             }
             imageUrl = product!!.image
+            title = "Update product"
+        } else {
+            title = getString(R.string.register_product)
         }
 
         saveBtnListener()
         productImageListener()
 
-        val database = ProductDatabase.getInstance(this)
-        productDao = database.productDao()
+
     }
 
     private fun productImageListener() {

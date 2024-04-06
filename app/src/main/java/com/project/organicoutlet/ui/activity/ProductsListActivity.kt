@@ -7,33 +7,36 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
 import com.project.organicoutlet.R
 import com.project.organicoutlet.database.Product
+import com.project.organicoutlet.database.ProductDao
 import com.project.organicoutlet.database.ProductDatabase
 import com.project.organicoutlet.databinding.ActivityProductsListBinding
 import com.project.organicoutlet.ui.recyclerview.adapter.ProductsListAdapter
 
 class ProductsListActivity : AppCompatActivity() {
     private lateinit var binding: ActivityProductsListBinding
+    private lateinit var productDao: ProductDao
     private val adapter = ProductsListAdapter { product ->
-        openDetailsActivity(product)
+        openDetailsActivity(product.productId)
     }
 
-    private fun openDetailsActivity(product: Product) {
+    private fun openDetailsActivity(productId: Long) {
         val intent = Intent(this, ProductDetailsActivity::class.java)
-        intent.putExtra("product", product)
+        intent.putExtra("productId", productId)
         startActivity(intent)
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = DataBindingUtil.setContentView(this, R.layout.activity_products_list)
+        val database = ProductDatabase.getInstance(this)
+        productDao = database.productDao()
         bindRecyclerViewAdapter()
         fabListener()
     }
 
     override fun onResume() {
         super.onResume()
-        val database = ProductDatabase.getInstance(this)
-        val productDao = database.productDao()
+
         adapter.update(productDao.getAllProducts())
     }
 

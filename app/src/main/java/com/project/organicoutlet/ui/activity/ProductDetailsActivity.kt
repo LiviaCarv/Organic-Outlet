@@ -6,17 +6,18 @@ import android.view.Menu
 import android.view.MenuInflater
 import android.view.MenuItem
 import androidx.appcompat.app.AppCompatActivity
-import androidx.core.view.MenuHost
 import com.project.organicoutlet.R
+import com.project.organicoutlet.database.Product
+import com.project.organicoutlet.database.ProductDao
+import com.project.organicoutlet.database.ProductDatabase
 import com.project.organicoutlet.databinding.ActivityProductDetailsBinding
 import com.project.organicoutlet.extensions.loadImage
-import com.project.organicoutlet.database.Product
-import com.project.organicoutlet.database.ProductDatabase
 
 
 class ProductDetailsActivity : AppCompatActivity() {
 
     private lateinit var currentProduct: Product
+    private lateinit var productDao: ProductDao
 
     private val binding by lazy {
         ActivityProductDetailsBinding.inflate(layoutInflater)
@@ -25,8 +26,14 @@ class ProductDetailsActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(binding.root)
+        val database = ProductDatabase.getInstance(this)
+        productDao = database.productDao()
+        tryLoadProduct()
+    }
 
-        val product = intent.getSerializableExtra("product") as? Product
+    private fun tryLoadProduct() {
+        val productId = intent.getLongExtra("productId", -1L)
+        val product = productDao.getProductById(productId)
         product?.let {
             currentProduct = product
             binding.product = product
@@ -42,11 +49,9 @@ class ProductDetailsActivity : AppCompatActivity() {
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         if (::currentProduct.isInitialized) {
-            val database = ProductDatabase.getInstance(this)
-            val productDao = database.productDao()
             return when (item.itemId) {
                 R.id.option_edit -> {
-                    openFormActivityForEdition(currentProduct)
+                    openFormActivityForEdition(currentProduct.productId)
                     finish()
                     true
                 }
@@ -63,9 +68,9 @@ class ProductDetailsActivity : AppCompatActivity() {
         return true
     }
 
-    private fun openFormActivityForEdition(product: Product) {
+    private fun openFormActivityForEdition(productId: Long) {
         val intent = Intent(this, ProductFormActivity::class.java)
-        intent.putExtra("product", product)
+        intent.putExtra("productId", productId)
         startActivity(intent)
     }
 
