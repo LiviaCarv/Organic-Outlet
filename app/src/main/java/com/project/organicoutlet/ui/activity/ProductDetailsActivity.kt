@@ -1,5 +1,6 @@
 package com.project.organicoutlet.ui.activity
 
+import android.content.Intent
 import android.os.Bundle
 import android.view.Menu
 import android.view.MenuInflater
@@ -40,22 +41,32 @@ class ProductDetailsActivity : AppCompatActivity() {
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        val database = ProductDatabase.getInstance(this)
-        val productDao = database.productDao()
-        return when (item.itemId) {
-            R.id.option_edit -> {
-                productDao.update(currentProduct)
-                true
-            }
+        if (::currentProduct.isInitialized) {
+            val database = ProductDatabase.getInstance(this)
+            val productDao = database.productDao()
+            return when (item.itemId) {
+                R.id.option_edit -> {
+                    openFormActivityForEdition(currentProduct)
+                    finish()
+                    true
+                }
 
-            R.id.option_delete -> {
-                productDao.delete(currentProduct)
-                finish()
-                true
-            }
+                R.id.option_delete -> {
+                    productDao.delete(currentProduct)
+                    finish()
+                    true
+                }
 
-            else -> super.onOptionsItemSelected(item)
+                else -> super.onOptionsItemSelected(item)
+            }
         }
+        return true
+    }
+
+    private fun openFormActivityForEdition(product: Product) {
+        val intent = Intent(this, ProductFormActivity::class.java)
+        intent.putExtra("product", product)
+        startActivity(intent)
     }
 
 }

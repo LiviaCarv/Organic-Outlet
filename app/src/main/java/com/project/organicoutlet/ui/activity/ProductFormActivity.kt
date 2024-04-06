@@ -17,11 +17,22 @@ class ProductFormActivity : AppCompatActivity() {
     private lateinit var binding: ActivityProductFormBinding
     private lateinit var productDao: ProductDao
     private var imageUrl: String? = null
+    private var product: Product? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = DataBindingUtil.setContentView(this, R.layout.activity_product_form)
         title = getString(R.string.register_product)
+
+        if (intent.hasExtra("product")) {
+            product = intent.getSerializableExtra("product") as? Product
+            product?.let {
+                binding.product = product
+                binding.edtImgProduct.loadImage(product!!.image)
+            }
+            imageUrl = product!!.image
+        }
+
         saveBtnListener()
         productImageListener()
 
@@ -40,13 +51,23 @@ class ProductFormActivity : AppCompatActivity() {
 
     private fun saveBtnListener() {
         binding.btnSave.setOnClickListener {
-            val product = newProduct()
-            if (product.name.isEmpty()) {
+            val newProduct = newProduct()
+            if (newProduct.name.isEmpty()) {
                 Toast.makeText(this, "Please insert the product name.", Toast.LENGTH_SHORT).show()
-            } else if (product.price.equals(BigDecimal.ZERO)) {
+            } else if (newProduct.price == BigDecimal.ZERO) {
                 Toast.makeText(this, "Please insert the product price.", Toast.LENGTH_SHORT).show()
             } else {
-                productDao.insert(product)
+                if (product != null) {
+                    product!!.apply {
+                        name = newProduct.name
+                        description = newProduct.description
+                        price = newProduct.price
+                        image = newProduct.image
+                    }
+                    productDao.update(product!!)
+                } else {
+                    productDao.insert(newProduct)
+                }
                 finish()
             }
 

@@ -13,14 +13,14 @@ data class Product(
     var productId: Long = 0L,
 
     @ColumnInfo(name = "name")
-    val name: String,
+    var name: String,
 
     @ColumnInfo(name = "description")
-    val description: String,
+    var description: String,
 
     @ColumnInfo(name = "price")
     var price: BigDecimal = BigDecimal.ZERO,
 
-    @ColumnInfo(name = "image_url")
+    @ColumnInfo(name = "image")
     var image: String? = null
 ) : Serializable

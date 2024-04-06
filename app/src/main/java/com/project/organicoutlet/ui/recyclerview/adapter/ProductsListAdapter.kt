@@ -25,41 +25,48 @@ class ProductsListAdapter(
         private lateinit var product: Product
 
         init {
-                itemView.setOnLongClickListener {
-                    PopupMenu(binding.root.context, itemView).apply {
-                        menuInflater.inflate(
-                            R.menu.details_menu,
-                            menu
-                        )
-                        setOnMenuItemClickListener(this@ViewHolder)
-                    }.show()
-                    true
-                }
+            itemView.setOnLongClickListener {
+                PopupMenu(binding.root.context, itemView).apply {
+                    menuInflater.inflate(
+                        R.menu.details_menu,
+                        menu
+                    )
+                    setOnMenuItemClickListener(this@ViewHolder)
+                }.show()
+                true
             }
+        }
 
         fun bind(item: Product) {
             product = item
             binding.product = item
 
-            if (item.image == null) {
-                binding.imgProduct.visibility = View.GONE
-            }
 
             binding.root.setOnClickListener {
                 onItemClickListener(item)
             }
 
-            binding.imgProduct.loadImage(item.image)
+            if (item.image == null) {
+                binding.imgProduct.visibility = View.GONE
+            } else {
+                binding.imgProduct.visibility = View.VISIBLE
+                binding.imgProduct.loadImage(item.image)
+            }
+
             binding.executePendingBindings()
         }
-
 
 
         override fun onMenuItemClick(item: MenuItem?): Boolean {
             item?.let {
                 when (item.itemId) {
-                    R.id.option_delete -> {deleteProduct(product)}
-                    R.id.option_edit -> {editProduct(product)}
+                    R.id.option_delete -> {
+                        deleteProduct(product)
+                    }
+
+                    R.id.option_edit -> {
+                        editProduct(product)
+                    }
                 }
             }
             return true
