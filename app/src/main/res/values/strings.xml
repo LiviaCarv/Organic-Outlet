@@ -14,4 +14,7 @@
     <string name="product_image_description">Product Image</string>
     <string name="edit">Edit</string>
     <string name="delete">Delete</string>
+    <string name="sort">Sort</string>
+    <string name="desc_order">Desc. order</string>
+    <string name="asc_order">Asc. order</string>
 </resources>
