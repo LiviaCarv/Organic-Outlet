@@ -12,12 +12,18 @@ import com.project.organicoutlet.database.ProductDao
 import com.project.organicoutlet.database.ProductDatabase
 import com.project.organicoutlet.databinding.ActivityProductDetailsBinding
 import com.project.organicoutlet.extensions.loadImage
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.MainScope
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 
 
 class ProductDetailsActivity : AppCompatActivity() {
 
     private lateinit var currentProduct: Product
     private lateinit var productDao: ProductDao
+    private val scope = CoroutineScope(Dispatchers.IO)
 
     private val binding by lazy {
         ActivityProductDetailsBinding.inflate(layoutInflater)
@@ -28,17 +34,23 @@ class ProductDetailsActivity : AppCompatActivity() {
         setContentView(binding.root)
         val database = ProductDatabase.getInstance(this)
         productDao = database.productDao()
-        tryLoadProduct()
+       tryLoadProduct()
     }
 
     private fun tryLoadProduct() {
         val productId = intent.getLongExtra("productId", -1L)
-        val product = productDao.getProductById(productId)
-        product?.let {
-            currentProduct = product
-            binding.product = product
-            binding.imgProductTop.loadImage(product.image)
+
+        scope.launch {
+            val product = productDao.getProductById(productId)
+            withContext(Dispatchers.Main) {
+                product.let {
+                    currentProduct = product
+                    binding.product = product
+                    binding.imgProductTop.loadImage(product.image)
+                }
+            }
         }
+
     }
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
@@ -57,8 +69,10 @@ class ProductDetailsActivity : AppCompatActivity() {
                 }
 
                 R.id.option_delete -> {
-                    productDao.delete(currentProduct)
-                    finish()
+                   scope.launch {
+                       productDao.delete(currentProduct)
+                       finish()
+                   }
                     true
                 }
 

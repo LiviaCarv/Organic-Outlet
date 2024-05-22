@@ -11,6 +11,10 @@ import com.project.organicoutlet.database.ProductDatabase
 import com.project.organicoutlet.databinding.ActivityProductFormBinding
 import com.project.organicoutlet.extensions.loadImage
 import com.project.organicoutlet.ui.dialog.ImageFormDialog
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 import java.math.BigDecimal
 
 class ProductFormActivity : AppCompatActivity() {
@@ -18,6 +22,7 @@ class ProductFormActivity : AppCompatActivity() {
     private lateinit var productDao: ProductDao
     private var imageUrl: String? = null
     private var product: Product? = null
+    private val scope = CoroutineScope(Dispatchers.IO)
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -27,13 +32,18 @@ class ProductFormActivity : AppCompatActivity() {
 
         if (intent.hasExtra("productId")) {
             val productId = intent.getLongExtra("productId", -1L)
-            product = productDao.getProductById(productId)
-            product?.let {
-                binding.product = product
-                binding.edtImgProduct.loadImage(product!!.image)
+            scope.launch {
+                product = productDao.getProductById(productId)
+                withContext(Dispatchers.Main) {
+                    product?.let {
+                        binding.product = product
+                        binding.edtImgProduct.loadImage(product!!.image)
+                    }
+                    imageUrl = product!!.image
+                    title = "Update product"
+                }
             }
-            imageUrl = product!!.image
-            title = "Update product"
+
         } else {
             title = getString(R.string.register_product)
         }
@@ -61,16 +71,20 @@ class ProductFormActivity : AppCompatActivity() {
             } else if (newProduct.price == BigDecimal.ZERO) {
                 Toast.makeText(this, "Please insert the product price.", Toast.LENGTH_SHORT).show()
             } else {
-                if (product != null) {
-                    product!!.apply {
-                        name = newProduct.name
-                        description = newProduct.description
-                        price = newProduct.price
-                        image = newProduct.image
+                scope.launch {
+                    if (product != null) {
+                       withContext(Dispatchers.Main) {
+                           product!!.apply {
+                               name = newProduct.name
+                               description = newProduct.description
+                               price = newProduct.price
+                               image = newProduct.image
+                           }
+                       }
+                        productDao.update(product!!)
+                    } else {
+                        productDao.insert(newProduct)
                     }
-                    productDao.update(product!!)
-                } else {
-                    productDao.insert(newProduct)
                 }
                 finish()
             }

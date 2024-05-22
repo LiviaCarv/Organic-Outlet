@@ -17,4 +17,5 @@
     <string name="sort">Sort</string>
     <string name="desc_order">Desc. order</string>
     <string name="asc_order">Asc. order</string>
+    <string name="creation_order">Creation Order</string>
 </resources>
