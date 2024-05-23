@@ -7,6 +7,7 @@ import android.view.MenuInflater
 import android.view.MenuItem
 import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
+import androidx.lifecycle.lifecycleScope
 import com.project.organicoutlet.R
 import com.project.organicoutlet.database.Product
 import com.project.organicoutlet.database.ProductDao
@@ -16,13 +17,13 @@ import com.project.organicoutlet.ui.recyclerview.adapter.ProductsListAdapter
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.MainScope
+import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 
 class ProductsListActivity : AppCompatActivity() {
     private lateinit var binding: ActivityProductsListBinding
     private lateinit var productDao: ProductDao
-    private val scope = CoroutineScope(Dispatchers.IO)
 
     private val adapter = ProductsListAdapter { product ->
         openDetailsActivity(product.productId)
@@ -34,6 +35,7 @@ class ProductsListActivity : AppCompatActivity() {
         binding = DataBindingUtil.setContentView(this, R.layout.activity_products_list)
         bindRecyclerViewAdapter()
         fabListener()
+
     }
 
     override fun onResume() {
@@ -41,12 +43,11 @@ class ProductsListActivity : AppCompatActivity() {
         val database = ProductDatabase.getInstance(this)
         productDao = database.productDao()
 
-        scope.launch {
-            val products = productDao.getAllProducts()
-
-            withContext(Dispatchers.Main) {
+        lifecycleScope.launch {
+            productDao.getAllProducts().collect { products ->
                 adapter.update(products)
             }
+
         }
     }
 
@@ -65,15 +66,21 @@ class ProductsListActivity : AppCompatActivity() {
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         when (item.itemId) {
             R.id.filter_asc -> {
-                fetchAndDisplayProducts { productDao.getProductsOrdAsc() }
+                lifecycleScope.launch{  productDao.getProductsOrdAsc().collect { products ->
+                    adapter.update(products)
+                } }
                 return true
             }
             R.id.filter_desc -> {
-                fetchAndDisplayProducts { productDao.getProductsOrdDesc() }
+                lifecycleScope.launch {  productDao.getProductsOrdDesc().collect { products ->
+                    adapter.update(products)
+                } }
                 return true
             }
             R.id.filter_creat -> {
-                fetchAndDisplayProducts { productDao.getAllProducts() }
+                lifecycleScope.launch{  productDao.getAllProducts().collect { products ->
+                    adapter.update(products)
+                } }
                 return true
             }
 
@@ -81,18 +88,7 @@ class ProductsListActivity : AppCompatActivity() {
                 return super.onOptionsItemSelected(item)
             }
         }
-    }
-
-    private fun fetchAndDisplayProducts(fetchProducts: suspend () -> List<Product>) {
-        scope.launch {
-            val products = withContext(Dispatchers.IO) {
-                fetchProducts()
-            }
-            withContext(Dispatchers.Main) {
-                adapter.update(products)
-            }
-        }
-    }
+  }
 
 
     private fun bindRecyclerViewAdapter() {

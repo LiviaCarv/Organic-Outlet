@@ -23,7 +23,7 @@ abstract class ProductDatabase : RoomDatabase() {
                 context,
                 ProductDatabase::class.java,
                 "organic-outlet-database"
-            ).allowMainThreadQueries().build().also {
+            ).build().also {
                     db = it
                 }
         }

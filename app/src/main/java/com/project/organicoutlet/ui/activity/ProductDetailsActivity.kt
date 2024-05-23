@@ -6,6 +6,7 @@ import android.view.Menu
 import android.view.MenuInflater
 import android.view.MenuItem
 import androidx.appcompat.app.AppCompatActivity
+import androidx.lifecycle.lifecycleScope
 import com.project.organicoutlet.R
 import com.project.organicoutlet.database.Product
 import com.project.organicoutlet.database.ProductDao
@@ -14,16 +15,13 @@ import com.project.organicoutlet.databinding.ActivityProductDetailsBinding
 import com.project.organicoutlet.extensions.loadImage
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.MainScope
 import kotlinx.coroutines.launch
-import kotlinx.coroutines.withContext
 
 
 class ProductDetailsActivity : AppCompatActivity() {
 
     private lateinit var currentProduct: Product
     private lateinit var productDao: ProductDao
-    private val scope = CoroutineScope(Dispatchers.IO)
 
     private val binding by lazy {
         ActivityProductDetailsBinding.inflate(layoutInflater)
@@ -34,21 +32,21 @@ class ProductDetailsActivity : AppCompatActivity() {
         setContentView(binding.root)
         val database = ProductDatabase.getInstance(this)
         productDao = database.productDao()
-       tryLoadProduct()
+        tryLoadProduct()
     }
 
     private fun tryLoadProduct() {
         val productId = intent.getLongExtra("productId", -1L)
 
-        scope.launch {
-            val product = productDao.getProductById(productId)
-            withContext(Dispatchers.Main) {
+        lifecycleScope.launch {
+            productDao.getProductById(productId).collect { product ->
                 product.let {
                     currentProduct = product
                     binding.product = product
                     binding.imgProductTop.loadImage(product.image)
                 }
             }
+
         }
 
     }
@@ -69,10 +67,10 @@ class ProductDetailsActivity : AppCompatActivity() {
                 }
 
                 R.id.option_delete -> {
-                   scope.launch {
-                       productDao.delete(currentProduct)
-                       finish()
-                   }
+                    lifecycleScope.launch {
+                        productDao.delete(currentProduct)
+                        finish()
+                    }
                     true
                 }
 

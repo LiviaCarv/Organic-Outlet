@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
+import androidx.lifecycle.lifecycleScope
 import com.project.organicoutlet.R
 import com.project.organicoutlet.database.Product
 import com.project.organicoutlet.database.ProductDao
@@ -22,7 +23,6 @@ class ProductFormActivity : AppCompatActivity() {
     private lateinit var productDao: ProductDao
     private var imageUrl: String? = null
     private var product: Product? = null
-    private val scope = CoroutineScope(Dispatchers.IO)
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -32,16 +32,17 @@ class ProductFormActivity : AppCompatActivity() {
 
         if (intent.hasExtra("productId")) {
             val productId = intent.getLongExtra("productId", -1L)
-            scope.launch {
-                product = productDao.getProductById(productId)
-                withContext(Dispatchers.Main) {
-                    product?.let {
+            lifecycleScope.launch {
+                productDao.getProductById(productId).collect { product ->
+                    product.let {
                         binding.product = product
-                        binding.edtImgProduct.loadImage(product!!.image)
+                        binding.edtImgProduct.loadImage(product.image)
+                        imageUrl = product.image
+
                     }
-                    imageUrl = product!!.image
-                    title = "Update product"
                 }
+                title = "Update product"
+
             }
 
         } else {
@@ -71,16 +72,16 @@ class ProductFormActivity : AppCompatActivity() {
             } else if (newProduct.price == BigDecimal.ZERO) {
                 Toast.makeText(this, "Please insert the product price.", Toast.LENGTH_SHORT).show()
             } else {
-                scope.launch {
+                lifecycleScope.launch {
                     if (product != null) {
-                       withContext(Dispatchers.Main) {
-                           product!!.apply {
-                               name = newProduct.name
-                               description = newProduct.description
-                               price = newProduct.price
-                               image = newProduct.image
-                           }
-                       }
+
+                        product!!.apply {
+                            name = newProduct.name
+                            description = newProduct.description
+                            price = newProduct.price
+                            image = newProduct.image
+                        }
+
                         productDao.update(product!!)
                     } else {
                         productDao.insert(newProduct)
