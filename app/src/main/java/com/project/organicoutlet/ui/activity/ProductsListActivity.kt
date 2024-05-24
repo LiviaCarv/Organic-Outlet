@@ -9,17 +9,11 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.lifecycleScope
 import com.project.organicoutlet.R
-import com.project.organicoutlet.database.Product
 import com.project.organicoutlet.database.ProductDao
 import com.project.organicoutlet.database.ProductDatabase
 import com.project.organicoutlet.databinding.ActivityProductsListBinding
 import com.project.organicoutlet.ui.recyclerview.adapter.ProductsListAdapter
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.MainScope
-import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.launch
-import kotlinx.coroutines.withContext
 
 class ProductsListActivity : AppCompatActivity() {
     private lateinit var binding: ActivityProductsListBinding
@@ -66,21 +60,29 @@ class ProductsListActivity : AppCompatActivity() {
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         when (item.itemId) {
             R.id.filter_asc -> {
-                lifecycleScope.launch{  productDao.getProductsOrdAsc().collect { products ->
-                    adapter.update(products)
-                } }
+                lifecycleScope.launch {
+                    productDao.getProductsOrdAsc().collect { products ->
+                        adapter.update(products)
+                    }
+                }
                 return true
             }
+
             R.id.filter_desc -> {
-                lifecycleScope.launch {  productDao.getProductsOrdDesc().collect { products ->
-                    adapter.update(products)
-                } }
+                lifecycleScope.launch {
+                    productDao.getProductsOrdDesc().collect { products ->
+                        adapter.update(products)
+                    }
+                }
                 return true
             }
+
             R.id.filter_creat -> {
-                lifecycleScope.launch{  productDao.getAllProducts().collect { products ->
-                    adapter.update(products)
-                } }
+                lifecycleScope.launch {
+                    productDao.getAllProducts().collect { products ->
+                        adapter.update(products)
+                    }
+                }
                 return true
             }
 
@@ -88,7 +90,7 @@ class ProductsListActivity : AppCompatActivity() {
                 return super.onOptionsItemSelected(item)
             }
         }
-  }
+    }
 
 
     private fun bindRecyclerViewAdapter() {

@@ -32,6 +32,7 @@
 
             <com.google.android.material.textfield.TextInputLayout
                 android:id="@+id/outtxtfield_name"
+                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_margin="@dimen/default_margin"
@@ -52,6 +53,7 @@
 
             <com.google.android.material.textfield.TextInputLayout
                 android:id="@+id/outtxtfield_description"
+                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/default_margin"
@@ -71,6 +73,7 @@
 
             <com.google.android.material.textfield.TextInputLayout
                 android:id="@+id/outtxtfield_price"
+                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/default_margin"
