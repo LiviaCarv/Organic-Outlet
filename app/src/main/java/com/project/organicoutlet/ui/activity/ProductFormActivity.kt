@@ -6,16 +6,13 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.lifecycleScope
 import com.project.organicoutlet.R
-import com.project.organicoutlet.database.Product
+import com.project.organicoutlet.model.Product
 import com.project.organicoutlet.database.ProductDao
 import com.project.organicoutlet.database.ProductDatabase
 import com.project.organicoutlet.databinding.ActivityProductFormBinding
 import com.project.organicoutlet.extensions.loadImage
 import com.project.organicoutlet.ui.dialog.ImageFormDialog
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
-import kotlinx.coroutines.withContext
 import java.math.BigDecimal
 
 class ProductFormActivity : AppCompatActivity() {

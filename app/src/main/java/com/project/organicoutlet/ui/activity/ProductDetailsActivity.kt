@@ -8,13 +8,11 @@ import android.view.MenuItem
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.lifecycleScope
 import com.project.organicoutlet.R
-import com.project.organicoutlet.database.Product
+import com.project.organicoutlet.model.Product
 import com.project.organicoutlet.database.ProductDao
 import com.project.organicoutlet.database.ProductDatabase
 import com.project.organicoutlet.databinding.ActivityProductDetailsBinding
 import com.project.organicoutlet.extensions.loadImage
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 
 

@@ -1,4 +1,4 @@
-package com.project.organicoutlet.database
+package com.project.organicoutlet.model
 
 import androidx.room.ColumnInfo
 import androidx.room.Entity

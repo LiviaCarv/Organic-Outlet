@@ -6,6 +6,7 @@ import androidx.room.Room
 import androidx.room.RoomDatabase
 import androidx.room.TypeConverters
 import com.project.organicoutlet.database.converter.Converters
+import com.project.organicoutlet.model.Product
 
 @Database(entities = [Product::class], version = 1, exportSchema = false)
 @TypeConverters(Converters::class)

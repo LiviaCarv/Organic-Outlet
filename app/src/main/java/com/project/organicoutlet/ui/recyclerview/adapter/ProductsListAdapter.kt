@@ -1,16 +1,12 @@
 package com.project.organicoutlet.ui.recyclerview.adapter
 
 import android.view.LayoutInflater
-import android.view.MenuItem
 import android.view.View
 import android.view.ViewGroup
-import android.widget.PopupMenu
-import android.widget.Toast
 import androidx.recyclerview.widget.RecyclerView
-import com.project.organicoutlet.R
 import com.project.organicoutlet.databinding.ProductItemBinding
 import com.project.organicoutlet.extensions.loadImage
-import com.project.organicoutlet.database.Product
+import com.project.organicoutlet.model.Product
 
 class ProductsListAdapter(
     products: List<Product> = emptyList(),
