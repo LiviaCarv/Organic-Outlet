@@ -25,7 +25,6 @@ class ProductsListAdapter(
             product = item
             binding.product = item
 
-
             binding.root.setOnClickListener {
                 onItemClickListener(item)
             }

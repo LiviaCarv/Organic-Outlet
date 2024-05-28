@@ -1,6 +1,5 @@
 package com.project.organicoutlet.ui.activity
 
-import android.content.Intent
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import com.project.organicoutlet.databinding.ActivityLoginBinding

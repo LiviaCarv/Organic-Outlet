@@ -9,18 +9,19 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.lifecycleScope
 import com.project.organicoutlet.R
-import com.project.organicoutlet.database.ProductDao
-import com.project.organicoutlet.database.ProductDatabase
+import com.project.organicoutlet.database.dao.ProductDao
+import com.project.organicoutlet.database.AppDatabase
 import com.project.organicoutlet.databinding.ActivityProductsListBinding
 import com.project.organicoutlet.ui.recyclerview.adapter.ProductsListAdapter
 import kotlinx.coroutines.launch
 
 class ProductsListActivity : AppCompatActivity() {
     private lateinit var binding: ActivityProductsListBinding
-    private lateinit var productDao: ProductDao
-
     private val adapter = ProductsListAdapter { product ->
         openDetailsActivity(product.productId)
+    }
+    private val productDao by lazy {
+        AppDatabase.getInstance(this).productDao()
     }
 
 
@@ -34,9 +35,6 @@ class ProductsListActivity : AppCompatActivity() {
 
     override fun onResume() {
         super.onResume()
-        val database = ProductDatabase.getInstance(this)
-        productDao = database.productDao()
-
         lifecycleScope.launch {
             productDao.getAllProducts().collect { products ->
                 adapter.update(products)

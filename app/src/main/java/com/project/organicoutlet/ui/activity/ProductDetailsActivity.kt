@@ -9,8 +9,8 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.lifecycleScope
 import com.project.organicoutlet.R
 import com.project.organicoutlet.model.Product
-import com.project.organicoutlet.database.ProductDao
-import com.project.organicoutlet.database.ProductDatabase
+import com.project.organicoutlet.database.dao.ProductDao
+import com.project.organicoutlet.database.AppDatabase
 import com.project.organicoutlet.databinding.ActivityProductDetailsBinding
 import com.project.organicoutlet.extensions.loadImage
 import kotlinx.coroutines.launch
@@ -19,7 +19,9 @@ import kotlinx.coroutines.launch
 class ProductDetailsActivity : AppCompatActivity() {
 
     private lateinit var currentProduct: Product
-    private lateinit var productDao: ProductDao
+    private val productDao by lazy {
+        AppDatabase.getInstance(this).productDao()
+    }
 
     private val binding by lazy {
         ActivityProductDetailsBinding.inflate(layoutInflater)
@@ -28,8 +30,6 @@ class ProductDetailsActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(binding.root)
-        val database = ProductDatabase.getInstance(this)
-        productDao = database.productDao()
         tryLoadProduct()
     }
 

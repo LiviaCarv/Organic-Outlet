@@ -7,8 +7,8 @@ import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.lifecycleScope
 import com.project.organicoutlet.R
 import com.project.organicoutlet.model.Product
-import com.project.organicoutlet.database.ProductDao
-import com.project.organicoutlet.database.ProductDatabase
+import com.project.organicoutlet.database.dao.ProductDao
+import com.project.organicoutlet.database.AppDatabase
 import com.project.organicoutlet.databinding.ActivityProductFormBinding
 import com.project.organicoutlet.extensions.loadImage
 import com.project.organicoutlet.ui.dialog.ImageFormDialog
@@ -17,16 +17,23 @@ import java.math.BigDecimal
 
 class ProductFormActivity : AppCompatActivity() {
     private lateinit var binding: ActivityProductFormBinding
-    private lateinit var productDao: ProductDao
     private var imageUrl: String? = null
     private var product: Product? = null
+
+    private val productDao by lazy {
+        AppDatabase.getInstance(this).productDao()
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = DataBindingUtil.setContentView(this, R.layout.activity_product_form)
-        val database = ProductDatabase.getInstance(this)
-        productDao = database.productDao()
+        tryLoadProduct()
+        saveBtnListener()
+        productImageListener()
 
+    }
+
+    private fun tryLoadProduct() {
         if (intent.hasExtra("productId")) {
             val productId = intent.getLongExtra("productId", -1L)
             lifecycleScope.launch {
@@ -45,11 +52,6 @@ class ProductFormActivity : AppCompatActivity() {
         } else {
             title = getString(R.string.register_product)
         }
-
-        saveBtnListener()
-        productImageListener()
-
-
     }
 
     private fun productImageListener() {
