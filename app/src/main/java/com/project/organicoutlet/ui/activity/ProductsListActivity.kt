@@ -2,6 +2,7 @@ package com.project.organicoutlet.ui.activity
 
 import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import android.view.Menu
 import android.view.MenuInflater
 import android.view.MenuItem
@@ -20,6 +21,9 @@ class ProductsListActivity : AppCompatActivity() {
     private val adapter = ProductsListAdapter { product ->
         openDetailsActivity(product.productId)
     }
+    private val userDao by lazy {
+        AppDatabase.getInstance(this).userDao()
+    }
     private val productDao by lazy {
         AppDatabase.getInstance(this).productDao()
     }
@@ -36,10 +40,16 @@ class ProductsListActivity : AppCompatActivity() {
     override fun onResume() {
         super.onResume()
         lifecycleScope.launch {
-            productDao.getAllProducts().collect { products ->
-                adapter.update(products)
+            run {
+                productDao.getAllProducts().collect { products ->
+                    adapter.update(products)
+                }
             }
-
+            intent.getStringExtra("KEY_USER_ID")?.let { userId ->
+                userDao.searchUserById(userId).collect {
+                    Log.i("LISTAPRODUTOS", "ON CREATE $it")
+                }
+            }
         }
     }
 
