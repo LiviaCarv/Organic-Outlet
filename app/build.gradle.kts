@@ -48,11 +48,11 @@ android {
 
 dependencies {
 
-implementation("androidx.activity:activity:1.8.0")
+    implementation("androidx.activity:activity:1.8.0")
     //    ROOM
-    val room_version = "2.6.1"
-    implementation("androidx.room:room-runtime:$room_version")
-    kapt("androidx.room:room-compiler:$room_version")
+    val roomVersion = "2.6.1"
+    implementation("androidx.room:room-runtime:$roomVersion")
+    kapt("androidx.room:room-compiler:$roomVersion")
 
 //    COIL
     implementation("io.coil-kt:coil:2.6.0")
@@ -66,9 +66,12 @@ implementation("androidx.activity:activity:1.8.0")
 //  KOTLIN EXTENSIONS AND COROUTINES SUPPORT FOR ROOM
     implementation("androidx.room:room-ktx:2.6.1")
 
-    implementation("androidx.core:core-ktx:1.12.0")
+    // DATA STORE
+    implementation("androidx.datastore:datastore-preferences:1.1.1")
+
+    implementation("androidx.core:core-ktx:1.13.1")
     implementation("androidx.appcompat:appcompat:1.6.1")
-    implementation("com.google.android.material:material:1.11.0")
+    implementation("com.google.android.material:material:1.12.0")
     implementation("androidx.constraintlayout:constraintlayout:2.1.4")
     implementation("androidx.recyclerview:recyclerview:1.3.2")
     implementation("androidx.room:room-common:2.6.1")

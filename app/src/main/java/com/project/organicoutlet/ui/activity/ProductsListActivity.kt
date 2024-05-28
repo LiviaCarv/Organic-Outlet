@@ -10,9 +10,10 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.lifecycleScope
 import com.project.organicoutlet.R
-import com.project.organicoutlet.database.dao.ProductDao
 import com.project.organicoutlet.database.AppDatabase
 import com.project.organicoutlet.databinding.ActivityProductsListBinding
+import com.project.organicoutlet.preferences.dataStore
+import com.project.organicoutlet.preferences.userPreferences
 import com.project.organicoutlet.ui.recyclerview.adapter.ProductsListAdapter
 import kotlinx.coroutines.launch
 
@@ -35,22 +36,19 @@ class ProductsListActivity : AppCompatActivity() {
         bindRecyclerViewAdapter()
         fabListener()
 
-    }
-
-    override fun onResume() {
-        super.onResume()
         lifecycleScope.launch {
-            run {
+            launch {
                 productDao.getAllProducts().collect { products ->
                     adapter.update(products)
                 }
             }
-            intent.getStringExtra("KEY_USER_ID")?.let { userId ->
-                userDao.searchUserById(userId).collect {
-                    Log.i("LISTAPRODUTOS", "ON CREATE $it")
+            dataStore.data.collect { preferences ->
+                preferences[userPreferences]?.let {
+                    Log.i("LIVIA", it)
                 }
             }
         }
+
     }
 
     private fun openDetailsActivity(productId: Long) {
