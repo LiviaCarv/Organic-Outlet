@@ -8,12 +8,14 @@ import android.view.MenuInflater
 import android.view.MenuItem
 import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
+import androidx.datastore.preferences.core.edit
 import androidx.lifecycle.lifecycleScope
 import com.project.organicoutlet.R
 import com.project.organicoutlet.database.AppDatabase
 import com.project.organicoutlet.databinding.ActivityProductsListBinding
 import com.project.organicoutlet.preferences.dataStore
 import com.project.organicoutlet.preferences.userPreferences
+import com.project.organicoutlet.ui.extensions.changeActivity
 import com.project.organicoutlet.ui.recyclerview.adapter.ProductsListAdapter
 import kotlinx.coroutines.launch
 
@@ -44,11 +46,16 @@ class ProductsListActivity : AppCompatActivity() {
             }
             dataStore.data.collect { preferences ->
                 preferences[userPreferences]?.let {
-                    Log.i("LIVIA", it)
-                }
+                    launch { userDao.searchUserById(it).collect { } }
+                } ?: openLoginActivity()
             }
         }
 
+    }
+
+    private fun openLoginActivity() {
+        changeActivity(LoginActivity::class.java)
+        finish()
     }
 
     private fun openDetailsActivity(productId: Long) {
@@ -58,8 +65,7 @@ class ProductsListActivity : AppCompatActivity() {
     }
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
-        val inflater: MenuInflater = menuInflater
-        inflater.inflate(R.menu.filter_menu, menu)
+        menuInflater.inflate(R.menu.filter_menu, menu)
         return true
     }
 
@@ -87,6 +93,15 @@ class ProductsListActivity : AppCompatActivity() {
                 lifecycleScope.launch {
                     productDao.getAllProducts().collect { products ->
                         adapter.update(products)
+                    }
+                }
+                return true
+            }
+
+            R.id.logout -> {
+                lifecycleScope.launch {
+                    dataStore.edit { preferences ->
+                        preferences.remove(userPreferences)
                     }
                 }
                 return true

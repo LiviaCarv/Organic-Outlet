@@ -25,4 +25,11 @@
                 app:showAsAction="never"/>
         </menu>
     </item>
+
+    <item
+        android:id="@+id/logout"
+        android:icon="@drawable/ic_logout"
+        android:title="@string/logout"
+        app:showAsAction="ifRoom"/>
+
 </menu>

@@ -37,6 +37,7 @@ class LoginActivity : AppCompatActivity() {
                         preferences[userPreferences] = user.id
                     }
                     changeActivity(ProductsListActivity::class.java)
+                    finish()
                 } ?: Toast.makeText(
                     this@LoginActivity,
                     "Authentication failed!",

@@ -19,13 +19,13 @@
             android:label="Register User"
             android:exported="false" />
         <activity
-            android:name=".ui.activity.ProductsListActivity"
-            android:exported="false" />
+            android:name=".ui.activity.LoginActivity"
+            android:exported="false"/>
         <activity android:name=".ui.activity.ProductFormActivity" />
         <activity android:name=".ui.activity.ProductDetailsActivity" />
 
         <activity
-            android:name=".ui.activity.LoginActivity"
+            android:name=".ui.activity.ProductsListActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
