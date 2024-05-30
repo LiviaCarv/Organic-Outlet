@@ -38,7 +38,7 @@ class ProductDetailsActivity : AppCompatActivity() {
 
         lifecycleScope.launch {
             productDao.getProductById(productId).collect { product ->
-                product.let {
+                product?.let {
                     currentProduct = product
                     binding.product = product
                     binding.imgProductTop.loadImage(product.image)
@@ -56,8 +56,7 @@ class ProductDetailsActivity : AppCompatActivity() {
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        if (::currentProduct.isInitialized) {
-            return when (item.itemId) {
+        return when (item.itemId) {
                 R.id.option_edit -> {
                     openFormActivityForEdition(currentProduct.productId)
                     finish()
@@ -65,18 +64,20 @@ class ProductDetailsActivity : AppCompatActivity() {
                 }
 
                 R.id.option_delete -> {
-                    lifecycleScope.launch {
-                        productDao.delete(currentProduct)
-                        finish()
+                    currentProduct?.let {
+                        lifecycleScope.launch {
+                            productDao.delete(currentProduct)
+                            finish()
+                        }
                     }
                     true
+
                 }
 
                 else -> super.onOptionsItemSelected(item)
             }
         }
-        return true
-    }
+
 
     private fun openFormActivityForEdition(productId: Long) {
         val intent = Intent(this, ProductFormActivity::class.java)

@@ -18,7 +18,7 @@ import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.launch
 
 abstract class UserBaseActivity : AppCompatActivity() {
-    private var _currentUser: MutableStateFlow<User?> = MutableStateFlow(null)
+    private val _currentUser: MutableStateFlow<User?> = MutableStateFlow(null)
     protected val currentUser: StateFlow<User?> = _currentUser
 
     private val userDao by lazy {
@@ -42,8 +42,10 @@ abstract class UserBaseActivity : AppCompatActivity() {
         }
     }
 
-    private suspend fun searchUser(userId: String) {
-        _currentUser.value = userDao.searchUserById(userId).firstOrNull()
+    private suspend fun searchUser(userId: String) : User? {
+        return userDao.searchUserById(userId).firstOrNull().also {
+            _currentUser.value = it
+        }
     }
 
     protected suspend fun userLogOut() {

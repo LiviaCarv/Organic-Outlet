@@ -22,5 +22,8 @@ data class Product(
     var price: BigDecimal = BigDecimal.ZERO,
 
     @ColumnInfo(name = "image")
-    var image: String? = null
+    var image: String? = null,
+
+    @ColumnInfo(name = "id_user")
+    var userId: String? = null
 )
