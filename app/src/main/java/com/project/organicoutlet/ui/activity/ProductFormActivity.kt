@@ -1,6 +1,7 @@
 package com.project.organicoutlet.ui.activity
 
 import android.os.Bundle
+import android.util.Log
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
@@ -12,10 +13,11 @@ import com.project.organicoutlet.database.AppDatabase
 import com.project.organicoutlet.databinding.ActivityProductFormBinding
 import com.project.organicoutlet.extensions.loadImage
 import com.project.organicoutlet.ui.dialog.ImageFormDialog
+import kotlinx.coroutines.flow.filterNotNull
 import kotlinx.coroutines.launch
 import java.math.BigDecimal
 
-class ProductFormActivity : AppCompatActivity() {
+class ProductFormActivity : UserBaseActivity() {
     private lateinit var binding: ActivityProductFormBinding
     private var imageUrl: String? = null
     private var product: Product? = null
@@ -30,6 +32,11 @@ class ProductFormActivity : AppCompatActivity() {
         tryLoadProduct()
         saveBtnListener()
         productImageListener()
+        lifecycleScope.launch {
+            currentUser.filterNotNull().collect {
+                Log.i("ProductForm", it.toString())
+            }
+        }
 
     }
 

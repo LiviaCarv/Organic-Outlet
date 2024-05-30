@@ -2,9 +2,7 @@ package com.project.organicoutlet.ui.activity
 
 import android.content.Intent
 import android.os.Bundle
-import android.util.Log
 import android.view.Menu
-import android.view.MenuInflater
 import android.view.MenuItem
 import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
@@ -17,16 +15,17 @@ import com.project.organicoutlet.preferences.dataStore
 import com.project.organicoutlet.preferences.userPreferences
 import com.project.organicoutlet.ui.extensions.changeActivity
 import com.project.organicoutlet.ui.recyclerview.adapter.ProductsListAdapter
+import kotlinx.coroutines.flow.filter
+import kotlinx.coroutines.flow.filterNotNull
+import kotlinx.coroutines.flow.firstOrNull
 import kotlinx.coroutines.launch
 
-class ProductsListActivity : AppCompatActivity() {
+class ProductsListActivity : UserBaseActivity() {
     private lateinit var binding: ActivityProductsListBinding
     private val adapter = ProductsListAdapter { product ->
         openDetailsActivity(product.productId)
     }
-    private val userDao by lazy {
-        AppDatabase.getInstance(this).userDao()
-    }
+
     private val productDao by lazy {
         AppDatabase.getInstance(this).productDao()
     }
@@ -39,23 +38,11 @@ class ProductsListActivity : AppCompatActivity() {
         fabListener()
 
         lifecycleScope.launch {
-            launch {
-                productDao.getAllProducts().collect { products ->
-                    adapter.update(products)
-                }
-            }
-            dataStore.data.collect { preferences ->
-                preferences[userPreferences]?.let {
-                    launch { userDao.searchUserById(it).collect { } }
-                } ?: openLoginActivity()
+            currentUser.filterNotNull().collect {
+                searchUserProducts()
             }
         }
 
-    }
-
-    private fun openLoginActivity() {
-        changeActivity(LoginActivity::class.java)
-        finish()
     }
 
     private fun openDetailsActivity(productId: Long) {
@@ -91,18 +78,14 @@ class ProductsListActivity : AppCompatActivity() {
 
             R.id.filter_creat -> {
                 lifecycleScope.launch {
-                    productDao.getAllProducts().collect { products ->
-                        adapter.update(products)
-                    }
+                    searchUserProducts()
                 }
                 return true
             }
 
             R.id.logout -> {
                 lifecycleScope.launch {
-                    dataStore.edit { preferences ->
-                        preferences.remove(userPreferences)
-                    }
+                    userLogOut()
                 }
                 return true
             }
@@ -110,6 +93,12 @@ class ProductsListActivity : AppCompatActivity() {
             else -> {
                 return super.onOptionsItemSelected(item)
             }
+        }
+    }
+
+    private suspend fun searchUserProducts() {
+        productDao.getAllProducts().collect { products ->
+            adapter.update(products)
         }
     }
 

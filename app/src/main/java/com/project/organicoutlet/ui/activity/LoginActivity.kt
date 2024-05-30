@@ -10,6 +10,7 @@ import com.project.organicoutlet.databinding.ActivityLoginBinding
 import com.project.organicoutlet.preferences.dataStore
 import com.project.organicoutlet.preferences.userPreferences
 import com.project.organicoutlet.ui.extensions.changeActivity
+import com.project.organicoutlet.ui.extensions.toast
 import kotlinx.coroutines.launch
 
 class LoginActivity : AppCompatActivity() {
@@ -31,23 +32,23 @@ class LoginActivity : AppCompatActivity() {
         binding.fabLogin.setOnClickListener {
             val user = binding.edtxtUser.text.toString()
             val password = binding.edtxtPassword.text.toString()
-            lifecycleScope.launch {
-                userDao.authenticate(user, password)?.let { user ->
-                    dataStore.edit { preferences ->
-                        preferences[userPreferences] = user.id
-                    }
-                    changeActivity(ProductsListActivity::class.java)
-                    finish()
-                } ?: Toast.makeText(
-                    this@LoginActivity,
-                    "Authentication failed!",
-                    Toast.LENGTH_SHORT
-                ).show()
-            }
+            authentication(user, password)
         }
 
         binding.fabRegister.setOnClickListener {
             changeActivity(RegisterUserActivity::class.java)
+        }
+    }
+
+    private fun authentication(user: String, password: String) {
+        lifecycleScope.launch {
+            userDao.authenticate(user, password)?.let { user ->
+                dataStore.edit { preferences ->
+                    preferences[userPreferences] = user.id
+                }
+                changeActivity(ProductsListActivity::class.java)
+                finish()
+            } ?: toast("Authentication failed! User not registered.")
         }
     }
 }

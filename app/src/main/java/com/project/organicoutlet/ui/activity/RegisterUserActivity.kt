@@ -11,6 +11,7 @@ import com.project.organicoutlet.R
 import com.project.organicoutlet.database.AppDatabase
 import com.project.organicoutlet.databinding.ActivityRegisterUserBinding
 import com.project.organicoutlet.model.User
+import com.project.organicoutlet.ui.extensions.toast
 import kotlinx.coroutines.launch
 
 class RegisterUserActivity : AppCompatActivity() {
@@ -31,13 +32,17 @@ class RegisterUserActivity : AppCompatActivity() {
     private fun fabListeners() {
         binding.btnRegisterUser.setOnClickListener{
             val newUser = createNewUser()
-            lifecycleScope.launch {
-                try {
-                    userDao.insert(newUser)
-                    finish()
-                } catch (exception: Exception) {
-                    Toast.makeText(this@RegisterUserActivity, exception.message, Toast.LENGTH_SHORT).show()
-                }
+            tryRegisterUser(newUser)
+        }
+    }
+
+    private fun tryRegisterUser(newUser: User) {
+        lifecycleScope.launch {
+            try {
+                userDao.insert(newUser)
+                finish()
+            } catch (exception: Exception) {
+                toast("Please choose a different username; the current one is already in use.")
             }
         }
     }
@@ -47,6 +52,5 @@ class RegisterUserActivity : AppCompatActivity() {
         val password = binding.edttxtPassword.text.toString()
         val name = binding.edttxtName.text.toString()
         return User(user, name, password)
-
     }
 }
