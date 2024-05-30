@@ -1,33 +1,36 @@
-
-
 # Organic Outlet
 
-Organic Outlet is an Android application that represents a list of products available in a store. With Organic Outlet, you can view a list of already registered products and easily add, remove, and update products.
+Organic Outlet is an Android application designed to showcase a list of products available in a store. With Organic Outlet, users can efficiently manage their product inventory by viewing, adding, removing, and updating product details. The app offers a seamless and user-friendly experience with modern design elements and robust functionality.
 
-## Funcionalidades
+This project serves an educational purpose and was developed during the "Develop your first Android app with Kotlin" course by Alura.
 
-1. Viewing the list of registered products.
-2. Adding new products through an intuitive form.
-3. Loading images for the product from the internet using the Coil library.
-4. Displaying details of a product by clicking on an item in the list.
-5. Updating and deleting products from the details screen.
+## Features
 
-  - Technologies Used
+- Product Listing: View a comprehensive list of registered products.
+- Product Management:
+    Add new products through an intuitive and user-friendly form.
+    Update and delete products directly from the details screen.
+- Image Loading: Load product images from the internet using the Coil library.
+- Product Details: Click on an item in the list to display detailed information about the product.
+- User Authentication: Secure login and authentication screens for user access control.
+- Product Filtering: Filter products in both descending and ascending order for better organization.
+- Database Migrations: Implement schema updates for the AppDatabase to ensure data consistency and integrity.
 
-    - RecyclerView to display the list of products.
-    - Coil library for loading images.
-    - Material Design library for a modern and user-friendly interface.
-    - Room for data persistence.
-    - Dialogs for intuitive user interactions.
+## Technologies Used
+
+- RecyclerView: Display the list of products efficiently.
+- Coil Library: Load images seamlessly from the internet.
+- Material Design: Create a modern and user-friendly interface.
+- Room: Provide robust data persistence.
+- Coroutines: Perform efficient database access operations.
+- Flow and StateFlow: Handle reactive data streams.
+- Dialogs: Facilitate intuitive user interactions.
+
    
-
-<img src="https://github.com/LiviaCarv/Organic-Outlet/assets/112710454/38c9f11e-254d-441b-8d7a-8d4eef1c050d" width="200" />
-<img src="https://github.com/LiviaCarv/Organic-Outlet/assets/112710454/2c1d9155-5491-477d-a960-cd588917adab" width="200" />
-<img src="https://github.com/LiviaCarv/Organic-Outlet/assets/112710454/4bb7a0dc-0a33-4855-aee1-79e87b3e1322" width="200" />
-
-
-<img src="https://github.com/LiviaCarv/Organic-Outlet/assets/112710454/b9b1300c-b161-4953-b815-73878befdf62" width="200" />
-<img src="https://github.com/LiviaCarv/Organic-Outlet/assets/112710454/55b2babb-50de-47ac-be61-c13f9f903906" width="200" />
-<img src="https://github.com/LiviaCarv/Organic-Outlet/assets/112710454/af424eff-19ab-40c1-89cd-9b8d4d72acba" width="200" />
+<video src='https://github.com/LiviaCarv/Organic-Outlet/assets/112710454/01fc4141-5595-4e2d-afcf-91d5139d12e7' width=180/> 
 
 If you have any questions or suggestions, don't hesitate to reach out. Thank you for checking out the "Organic Outlet" app! :smile: :rocket:
+
+
+https://github.com/LiviaCarv/Organic-Outlet/assets/112710454/01fc4141-5595-4e2d-afcf-91d5139d12e7
+
