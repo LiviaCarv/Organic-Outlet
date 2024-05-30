@@ -4,20 +4,13 @@ import android.content.Intent
 import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
-import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
-import androidx.datastore.preferences.core.edit
 import androidx.lifecycle.lifecycleScope
 import com.project.organicoutlet.R
 import com.project.organicoutlet.database.AppDatabase
 import com.project.organicoutlet.databinding.ActivityProductsListBinding
-import com.project.organicoutlet.preferences.dataStore
-import com.project.organicoutlet.preferences.userPreferences
-import com.project.organicoutlet.ui.extensions.changeActivity
 import com.project.organicoutlet.ui.recyclerview.adapter.ProductsListAdapter
-import kotlinx.coroutines.flow.filter
 import kotlinx.coroutines.flow.filterNotNull
-import kotlinx.coroutines.flow.firstOrNull
 import kotlinx.coroutines.launch
 
 class ProductsListActivity : UserBaseActivity() {
@@ -38,7 +31,7 @@ class ProductsListActivity : UserBaseActivity() {
         fabListener()
 
         lifecycleScope.launch {
-            searchUserProducts()
+            searchUserProducts("all")
         }
 
     }
@@ -58,25 +51,21 @@ class ProductsListActivity : UserBaseActivity() {
         when (item.itemId) {
             R.id.filter_asc -> {
                 lifecycleScope.launch {
-                    productDao.getProductsOrdAsc().collect { products ->
-                        adapter.update(products)
-                    }
+                    searchUserProducts("asc")
                 }
                 return true
             }
 
             R.id.filter_desc -> {
                 lifecycleScope.launch {
-                    productDao.getProductsOrdDesc().collect { products ->
-                        adapter.update(products)
-                    }
+                    searchUserProducts("desc")
                 }
                 return true
             }
 
             R.id.filter_creat -> {
                 lifecycleScope.launch {
-                    searchUserProducts()
+                    searchUserProducts("all")
                 }
                 return true
             }
@@ -94,10 +83,27 @@ class ProductsListActivity : UserBaseActivity() {
         }
     }
 
-    private suspend fun searchUserProducts() {
+    private suspend fun searchUserProducts(option: String) {
         currentUser.filterNotNull().collect {
-            productDao.getProductsByUser(it.id).collect { products ->
-                adapter.update(products)
+            when (option) {
+                "asc" -> {
+                    productDao.getProductsOrdAsc(it.id).collect { products ->
+                        adapter.update(products)
+                    }
+                }
+
+                "desc" -> {
+                    productDao.getProductsOrdDesc(it.id).collect { products ->
+                        adapter.update(products)
+                    }
+                }
+
+                else -> {
+                    productDao.getProductsByUser(it.id).collect { products ->
+                        adapter.update(products)
+                    }
+
+                }
             }
         }
 

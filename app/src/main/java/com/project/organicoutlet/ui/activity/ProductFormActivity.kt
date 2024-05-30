@@ -10,8 +10,6 @@ import com.project.organicoutlet.databinding.ActivityProductFormBinding
 import com.project.organicoutlet.extensions.loadImage
 import com.project.organicoutlet.model.Product
 import com.project.organicoutlet.ui.dialog.ImageFormDialog
-import kotlinx.coroutines.flow.filterNotNull
-import kotlinx.coroutines.flow.firstOrNull
 import kotlinx.coroutines.launch
 import java.math.BigDecimal
 
@@ -67,12 +65,18 @@ class ProductFormActivity : UserBaseActivity() {
             val newProduct = newProduct()
             if (validProduct(newProduct)) {
                 lifecycleScope.launch {
-
                     currentUser.value?.let {
                         newProduct.userId = it.id
                     }
+
                     if (product != null) {
-                        product = newProduct
+                        product!!.apply {
+                            name = newProduct.name
+                            description = newProduct.description
+                            price = newProduct.price
+                            image = newProduct.image
+                            userId = newProduct.userId
+                        }
                         productDao.update(product!!)
                     } else {
                         productDao.insert(newProduct)
@@ -84,29 +88,29 @@ class ProductFormActivity : UserBaseActivity() {
         }
     }
 
-        private fun validProduct(newProduct: Product): Boolean {
-            return if (newProduct.name.isEmpty()) {
-                Toast.makeText(this, "Please insert the product name.", Toast.LENGTH_SHORT).show()
-                false
-            } else if (newProduct.price == BigDecimal.ZERO) {
-                Toast.makeText(this, "Please insert the product price.", Toast.LENGTH_SHORT).show()
-                false
-            } else {
-                true
-            }
+    private fun validProduct(newProduct: Product): Boolean {
+        return if (newProduct.name.isEmpty()) {
+            Toast.makeText(this, "Please insert the product name.", Toast.LENGTH_SHORT).show()
+            false
+        } else if (newProduct.price == BigDecimal.ZERO) {
+            Toast.makeText(this, "Please insert the product price.", Toast.LENGTH_SHORT).show()
+            false
+        } else {
+            true
         }
-
-        private fun newProduct(): Product {
-            val name = binding.edtName.text.toString()
-            val description = binding.edtDescription.text.toString()
-            val price = binding.edtPrice.text.toString()
-            val product = Product(name = name, description = description, image = imageUrl)
-            if (price.isNotEmpty()) {
-                product.price = BigDecimal(price)
-            }
-
-            return product
-        }
-
-
     }
+
+    private fun newProduct(): Product {
+        val name = binding.edtName.text.toString()
+        val description = binding.edtDescription.text.toString()
+        val price = binding.edtPrice.text.toString()
+        val product = Product(name = name, description = description, image = imageUrl)
+        if (price.isNotEmpty()) {
+            product.price = BigDecimal(price)
+        }
+
+        return product
+    }
+
+
+}

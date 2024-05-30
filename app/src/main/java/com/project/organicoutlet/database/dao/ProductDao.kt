@@ -26,11 +26,11 @@ interface ProductDao {
     @Query("SELECT * FROM products_table WHERE productId = :id")
     fun getProductById(id: Long): Flow<Product>
 
-    @Query("SELECT * FROM products_table ORDER BY name ASC")
-    fun getProductsOrdAsc(): Flow<List<Product>>
+    @Query("SELECT * FROM products_table WHERE id_user = :userId ORDER BY name ASC")
+    fun getProductsOrdAsc(userId: String): Flow<List<Product>>
 
-    @Query("SELECT * FROM products_table ORDER BY name DESC")
-    fun getProductsOrdDesc(): Flow<List<Product>>
+    @Query("SELECT * FROM products_table WHERE id_user = :userId ORDER BY name DESC")
+    fun getProductsOrdDesc(userId: String): Flow<List<Product>>
 
     @Query("SELECT * FROM products_table WHERE id_user = :userId")
     fun getProductsByUser(userId: String): Flow<List<Product>>
