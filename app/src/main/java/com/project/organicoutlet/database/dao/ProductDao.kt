@@ -32,4 +32,7 @@ interface ProductDao {
     @Query("SELECT * FROM products_table ORDER BY name DESC")
     fun getProductsOrdDesc(): Flow<List<Product>>
 
+    @Query("SELECT * FROM products_table WHERE id_user = :userId")
+    fun getProductsByUser(userId: String): Flow<List<Product>>
+
 }

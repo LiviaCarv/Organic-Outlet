@@ -38,9 +38,7 @@ class ProductsListActivity : UserBaseActivity() {
         fabListener()
 
         lifecycleScope.launch {
-            currentUser.filterNotNull().collect {
-                searchUserProducts()
-            }
+            searchUserProducts()
         }
 
     }
@@ -97,9 +95,12 @@ class ProductsListActivity : UserBaseActivity() {
     }
 
     private suspend fun searchUserProducts() {
-        productDao.getAllProducts().collect { products ->
-            adapter.update(products)
+        currentUser.filterNotNull().collect {
+            productDao.getProductsByUser(it.id).collect { products ->
+                adapter.update(products)
+            }
         }
+
     }
 
 
